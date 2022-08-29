@@ -1,5 +1,5 @@
 describe("Testing", ()=> {
-    it("Upload some photos(1)", ()=> {
+    it("Checking data should not equal", ()=> {
         cy.request('https://reqres.in/api/unknown').then((response) => {
             expect(response.status).to.eq(200)
             const firstData = response.body.data
@@ -17,13 +17,17 @@ describe("Testing", ()=> {
                     firstId: resultData.id,
                     firstAmount: resultData.year
                 }));
-
+                const resultFirstDataCloning = firstData.map( resultData => ({
+                    firstIdCloning: resultData.id,
+                    firstAmountCloning: resultData.year
+                }));
+                
                 resultFirstData.forEach(({firstId, firstAmount})=> {
                     resultSecondData.forEach(({secondId, secondAmount})=> {
-                        if((firstId == secondId) && (firstAmount == secondAmount)){
-                            console.log("return true")
-                        }else{
-                            console.log("return false")
+                       if((firstId == secondId) && (firstAmount == secondAmount)){
+                            console.log("true")
+                        }else if((firstId == secondId) && (firstAmount != secondAmount)){
+                            console.log("false")
                         }
                     })
                 })
